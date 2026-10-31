@@ -10,6 +10,7 @@ public class AppConfig {
     @Bean
     @Scope("prototype")
     PaymentService paymentService() {
+        // more code login may come here
         return new PaymentService();
     }
 }
