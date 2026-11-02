@@ -1,5 +1,6 @@
 package com.codingshuttle.ronak.module1Introduction;
 
+import com.codingshuttle.ronak.module1Introduction.Homework.CakeBaker;
 import com.codingshuttle.ronak.module1Introduction.impl.EmailNotificationService;
 import com.codingshuttle.ronak.module1Introduction.impl.SmsNotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,13 @@ public class Module1IntroductionApplication implements CommandLineRunner {
 	@Autowired
 	Map<String, NotificationService> notificationServiceMap = new HashMap<>();
 
+
+	CakeBaker cakeBaker;
+
+	public Module1IntroductionApplication(CakeBaker cakeBaker) {
+		this.cakeBaker = cakeBaker;
+	}
+
 	public static void main(String[] args) {
 		SpringApplication.run(Module1IntroductionApplication.class, args);
 	}
@@ -36,9 +44,11 @@ public class Module1IntroductionApplication implements CommandLineRunner {
 
 
 //		create all bean
-		for (var notificationService : notificationServiceMap.entrySet()) {
-			System.out.println(notificationService.getKey());
-			notificationService.getValue().send("Hello");
-		}
+//		for (var notificationService : notificationServiceMap.entrySet()) {
+//			System.out.println(notificationService.getKey());
+//			notificationService.getValue().send("Hello");
+//		}
+
+		cakeBaker.backCake();
 	} 
 }
