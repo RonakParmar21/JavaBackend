@@ -1,6 +1,8 @@
 package com.module2.ronak.module2SpringBootMVCAndRestfulAPI.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.module2.ronak.module2SpringBootMVCAndRestfulAPI.annotations.EmployeeRoleValidation;
+import com.module2.ronak.module2SpringBootMVCAndRestfulAPI.annotations.PrimeNumberValidation;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -39,7 +41,8 @@ public class EmployeeDTO {
     private Double salary;
 
     @NotBlank(message = "Employee role can not be blank.")
-    @Pattern(regexp = "^(ADMIN|USER)$", message = "Role of employee can be USER or ADMIN.")
+//    @Pattern(regexp = "^(ADMIN|USER)$", message = "Role of employee can be USER or ADMIN.")
+    @EmployeeRoleValidation
     private String role; // ADMIN, USER
 
 //    @Past(message = "Employee joining date shoud be past")
@@ -48,4 +51,7 @@ public class EmployeeDTO {
 
     @AssertTrue(message = "Employee should be active.")
     private Boolean isActive;
+
+    @PrimeNumberValidation
+    private Integer isPrime;
 }
