@@ -2,6 +2,7 @@ package com.module2.ronak.module2SpringBootMVCAndRestfulAPI.controllers;
 
 import com.module2.ronak.module2SpringBootMVCAndRestfulAPI.dto.EmployeeDTO;
 import com.module2.ronak.module2SpringBootMVCAndRestfulAPI.entities.EmployeeEntity;
+import com.module2.ronak.module2SpringBootMVCAndRestfulAPI.exceptions.ResourceNotFoundException;
 import com.module2.ronak.module2SpringBootMVCAndRestfulAPI.repositories.EmployeeRepository;
 import com.module2.ronak.module2SpringBootMVCAndRestfulAPI.services.EmployeeService;
 import jakarta.validation.Valid;
@@ -10,10 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping(path = "/employees")
@@ -40,7 +38,7 @@ public class EmployeeController {
         Optional<EmployeeDTO> employeeDTO = employeeService.getEmployeeById(id);
         return employeeDTO
                 .map(employeeDTO1 -> ResponseEntity.ok(employeeDTO1))
-                .orElse(ResponseEntity.notFound().build());
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not found."));
     }
 
     @GetMapping
@@ -68,7 +66,7 @@ public class EmployeeController {
     }
 
     @PutMapping(path = "/{employeeId}")
-    public ResponseEntity<EmployeeDTO> updateEmployeeById(@RequestBody EmployeeDTO employeeDTO,
+    public ResponseEntity<EmployeeDTO> updateEmployeeById(@RequestBody @Valid EmployeeDTO employeeDTO,
                                           @PathVariable Long employeeId) {
         return ResponseEntity.ok(employeeService.updateEmployeeById(employeeId, employeeDTO));
     }

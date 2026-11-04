@@ -52,6 +52,6 @@ public class EmployeeDTO {
     @AssertTrue(message = "Employee should be active.")
     private Boolean isActive;
 
-    @PrimeNumberValidation
-    private Integer isPrime;
+//    @PrimeNumberValidation
+//    private Integer isPrime;
 }

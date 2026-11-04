@@ -2,6 +2,7 @@ package com.module2.ronak.module2SpringBootMVCAndRestfulAPI.services;
 
 import com.module2.ronak.module2SpringBootMVCAndRestfulAPI.dto.EmployeeDTO;
 import com.module2.ronak.module2SpringBootMVCAndRestfulAPI.entities.EmployeeEntity;
+import com.module2.ronak.module2SpringBootMVCAndRestfulAPI.exceptions.ResourceNotFoundException;
 import com.module2.ronak.module2SpringBootMVCAndRestfulAPI.repositories.EmployeeRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.util.ReflectionUtils;
@@ -46,6 +47,8 @@ public class EmployeeService {
     }
 
     public EmployeeDTO updateEmployeeById(Long employeeId, EmployeeDTO employeeDTO) {
+        boolean exists = isExistsByEmployeeId(employeeId);
+        if (!exists) throw new ResourceNotFoundException("Employee not found with id : " + employeeId);
         EmployeeEntity employeeEntity = modelMapper.map(employeeDTO, EmployeeEntity.class);
         employeeEntity.setId(employeeId);
         EmployeeEntity savedEmployeeEntity = employeeRepository.save(employeeEntity);
@@ -59,14 +62,14 @@ public class EmployeeService {
 
     public boolean deleteEmployeeById(Long employeeId) {
         boolean exists = isExistsByEmployeeId(employeeId);
-        if (!exists) return false;
+        if (!exists) throw new ResourceNotFoundException("Employee not found with id : " + employeeId);
         employeeRepository.deleteById(employeeId);
         return true;
     }
 
     public EmployeeDTO updatePartialEmployeeById(Long employeeId, Map<String, Object> updates) {
         boolean exists = isExistsByEmployeeId(employeeId);
-        if (!exists) return null;
+        if (!exists) throw new ResourceNotFoundException("Employee not found with id : " + employeeId);
 
         EmployeeEntity employeeEntity = employeeRepository.findById(employeeId).get();
         updates.forEach((field, value) -> {
