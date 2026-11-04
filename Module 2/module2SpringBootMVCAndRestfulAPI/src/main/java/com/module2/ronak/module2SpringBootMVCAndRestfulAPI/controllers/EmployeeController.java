@@ -4,6 +4,7 @@ import com.module2.ronak.module2SpringBootMVCAndRestfulAPI.dto.EmployeeDTO;
 import com.module2.ronak.module2SpringBootMVCAndRestfulAPI.entities.EmployeeEntity;
 import com.module2.ronak.module2SpringBootMVCAndRestfulAPI.repositories.EmployeeRepository;
 import com.module2.ronak.module2SpringBootMVCAndRestfulAPI.services.EmployeeService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -52,7 +53,7 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public ResponseEntity<EmployeeDTO> createNewEmployee(@RequestBody EmployeeDTO inputEmployee) {
+    public ResponseEntity<EmployeeDTO> createNewEmployee(@RequestBody @Valid EmployeeDTO inputEmployee) {
 //        inputEmployeeDTO.setId(100L);
 //        System.out.println("Employee Id is : " + inputEmployeeDTO.getId());
 //        System.out.println("Employee name is : " + inputEmployeeDTO.getName());
